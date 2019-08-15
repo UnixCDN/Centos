@@ -150,7 +150,7 @@ cp ca.crt server.crt server.key /etc/openvpn
 cd
 # setting server
 cat > /etc/openvpn/server.conf <<-END
-port 1194
+port 465
 proto tcp
 dev tun
 ca ca.crt
@@ -188,15 +188,15 @@ cat > openvpn.ovpn <<-END
 client
 dev tun
 proto tcp
-remote xxxxxxxxx 1194
+remote xxxxxxxxx 465
 persist-key
 persist-tun
 dev tun
 pull
 resolv-retry infinite
 nobind
-ns-cert-type server
-verb 3
+remote-cert-tls server
+verb 5
 mute 2
 mute-replay-warnings
 auth-user-pass
@@ -236,7 +236,7 @@ firewall-cmd --permanent --add-masquerade
 firewall-cmd --query-masquerade
 SHARK=$(ip route get 1.1.1.1 | awk 'NR==1 {print $(NF-2)}')
 firewall-cmd --permanent --direct --passthrough ipv4 -t nat -A POSTROUTING -s 192.168.100.0/24 -o $SHARK -j MASQUERADE
-firewall-cmd --zone=public --add-port=1194/tcp --permanent
+firewall-cmd --zone=public --add-port=465/tcp --permanent
 firewall-cmd --reload
 #forward ipv4
 sysctl -w net.ipv4.ip_forward=1
@@ -392,7 +392,7 @@ cat > /root/log.txt <<-END
 "          to remove:    # userdel username                          "
 "--------------------------------------------------------------------"
 Application & Port Information
-   - OpenVPN     : TCP 1194 
+   - OpenVPN     : TCP 465 
    - OpenSSH     : 22, 143, 90
    - Dropbear    : 109, 110, 442
    - Squid Proxy : 80, 8000, 8080, 8888, 3128 (limit to IP Server)
@@ -428,7 +428,7 @@ echo "      change passwd:    # echo "username:password" | chpasswd       "
 echo "          to remove:    # userdel username                          "
 echo "--------------------------------------------------------------------"
 echo "Application & Port Information"
-echo "   - OpenVPN     : TCP 1194 "
+echo "   - OpenVPN     : TCP 465 "
 echo "   - OpenSSH     : 22, 143, 90"
 echo "   - Dropbear    : 109, 110, 442"
 echo "   - Squid Proxy : 80, 8000, 8080, 8888, 3128 (limit to IP Server)" 
@@ -437,5 +437,6 @@ echo " "
 echo "----- Script Created By Steven Indarto(fb.com/stevenindarto2) ------"
 echo " Created by Hosting Termurah, Modified by Tacome9 and Deployed by Bjorn VPN - (https://www.phcorner.net/members/228541/)"
 #restart squid
+sleep 2
 /usr/sbin/squid -k shutdown
 /usr/sbin/squid
