@@ -186,6 +186,7 @@ cd
 # create openvpn config
 cat > openvpn.ovpn <<-END
 #OpenVPN and SSH Panel by Bjorn VPN
+
 client
 dev tun
 proto tcp
@@ -210,6 +211,7 @@ route-delay 2
 cipher AES-256-CBC
 setenv CLIENT_CERT 0
 dhcp-option DOMAIN 1dot1dot1dot1.cloudflare-dns.com
+
 http-proxy xxxxxxxxx 8000
 http-proxy-option CUSTOM-HEADER ""
 http-proxy-option CUSTOM-HEADER "PUT https://s3.amazonaws.com HTTP/1.0"
