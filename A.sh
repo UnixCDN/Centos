@@ -1,7 +1,5 @@
 #!/bin/bash
-# Created by https://www.hostingtermurah.net
-# Modified by Tacome9
-# Deployed by Bjorn SSH and OpenVPN
+# Modified and Deployed by Bjorn SSH and OpenVPN
 
 #Requirement
 if [ ! -e /usr/bin/curl ]; then
@@ -152,7 +150,7 @@ cp ca.crt server.crt server.key /etc/openvpn
 cd
 # setting server
 cat > /etc/openvpn/server.conf <<-END
-port 465
+port 1194
 proto tcp
 dev tun
 ca ca.crt
@@ -190,7 +188,7 @@ cat > openvpn.ovpn <<-END
 client
 dev tun
 proto tcp
-remote xxxxxxxxx 465
+remote xxxxxxxxx 1194
 persist-key
 persist-tun
 dev tun
@@ -238,7 +236,7 @@ firewall-cmd --permanent --add-masquerade
 firewall-cmd --query-masquerade
 SHARK=$(ip route get 1.1.1.1 | awk 'NR==1 {print $(NF-2)}')
 firewall-cmd --permanent --direct --passthrough ipv4 -t nat -A POSTROUTING -s 192.168.100.0/24 -o $SHARK -j MASQUERADE
-firewall-cmd --zone=public --add-port=465/tcp --permanent
+firewall-cmd --zone=public --add-port=1194/tcp --permanent
 firewall-cmd --reload
 #forward ipv4
 sysctl -w net.ipv4.ip_forward=1
@@ -394,7 +392,7 @@ cat > /root/log.txt <<-END
 "          to remove:    # userdel username                          "
 "--------------------------------------------------------------------"
 Application & Port Information
-   - OpenVPN     : TCP 465 
+   - OpenVPN     : TCP 1194 
    - OpenSSH     : 22, 143, 90
    - Dropbear    : 109, 110, 442
    - Squid Proxy : 80, 8000, 8080, 8888, 3128 (limit to IP Server)
@@ -430,7 +428,7 @@ echo "      change passwd:    # echo "username:password" | chpasswd       "
 echo "          to remove:    # userdel username                          "
 echo "--------------------------------------------------------------------"
 echo "Application & Port Information"
-echo "   - OpenVPN     : TCP 465 "
+echo "   - OpenVPN     : TCP 1194 "
 echo "   - OpenSSH     : 22, 143, 90"
 echo "   - Dropbear    : 109, 110, 442"
 echo "   - Squid Proxy : 80, 8000, 8080, 8888, 3128 (limit to IP Server)" 
