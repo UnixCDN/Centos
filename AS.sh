@@ -263,17 +263,19 @@ yum install -y libxml2-devel libcap-devel
 yum install -y libtool-ltdl-devel
  
 #Downloading Squid Source Archive
-mkdir /usr/src/squid
-cd /usr/src/squid
-wget http://www.squid-cache.org/Versions/v3/3.1/squid-3.1.23.tar.gz
-tar fxvz squid-3.1.23.tar.gz
-cd squid-3.1.23
+#mkdir /usr/src/squid
+#cd /usr/src/squid
+#wget http://www.squid-cache.org/Versions/v3/3.1/squid-3.1.23.tar.gz
+#tar fxvz squid-3.1.23.tar.gz
+#cd squid-3.1.23
  
 #Compiling Squid Proxy
-./configure --prefix=/usr --includedir=/usr/include --datadir=/usr/share --bindir=/usr/sbin --libexecdir=/usr/lib/squid --localstatedir=/var --sysconfdir=/etc/squid --enable-delay-pools --enable-arp-acl --enable-linux-netfilter && echo "Configuration Successful"
-make clean
-make -j4
-make install
+#./configure --prefix=/usr --includedir=/usr/include --datadir=/usr/share --bindir=/usr/sbin --libexecdir=/usr/lib/squid --localstatedir=/var --sysconfdir=/etc/squid --enable-delay-pools --enable-arp-acl --enable-linux-netfilter && echo "Configuration Successful"
+#make clean
+#make -j4
+#make install
+
+sudo yum install squid-3.5.20-12.el7.1.x86_64.rpm
  
 #create files for squid's default user nobody
 touch /var/cache/squid
