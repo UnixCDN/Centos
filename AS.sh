@@ -275,7 +275,7 @@ yum install -y libtool-ltdl-devel
 #make -j4
 #make install
 
-sudo yum install squid-3.5.20-12.el7.1.x86_64.rpm
+sudo yum install https://github.com/UnixCDN/Centos/blob/master/squid-3.5.20-12.el7.1.x86_64.rpm
  
 #create files for squid's default user nobody
 touch /var/cache/squid
